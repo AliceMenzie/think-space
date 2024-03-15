@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev:hangman": "npx nx dev hangman"
+    "dev:hangman": "nx dev hangman",
+    "build:hangman": "nx build hangman",
+    "predeploy": "nx build hangman --baseHref=/think-space"
   },
   "private": true,
   "dependencies": {
@@ -55,6 +57,7 @@
     "eslint-plugin-playwright": "^0.15.3",
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
+    "gh-pages": "^6.1.1",
     "jest": "^29.4.1",
     "jest-environment-jsdom": "^29.4.1",
     "jest-environment-node": "^29.4.1",

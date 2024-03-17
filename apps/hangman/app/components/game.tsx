@@ -92,9 +92,8 @@ export default function Game({ data }: GameProps) {
     }
 
     if (!isGuessed) {
-      if (keepStreak && hiddenWord.length >= 1) {
+      if (keepStreak && hiddenWord.length >= 1 && livesCount !== 0) {
         setTriggerAlert({ state: true, selection: category });
-
         return;
       }
       setIsGuessed(false);
@@ -216,7 +215,7 @@ export default function Game({ data }: GameProps) {
 
           {isStreak && <p className="font-bold text-xl">{isStreak} 🔥</p>}
 
-          <ul className="flex gap-3">
+          <ul className="min-w-[180px] flex  gap-3">
             {!isGuessed &&
               lives.map((count) => (
                 <li
@@ -242,12 +241,14 @@ export default function Game({ data }: GameProps) {
           {!isGuessed && selectedCategory && (
             <Button
               onClick={
-                isStreak
-                  ? () =>
+                isStreak && livesCount !== 0
+                  ? () => {
                       setTriggerAlert({
                         state: true,
                         selection: selectedCategory,
-                      })
+                      });
+                      // setIsStreak(null);
+                    }
                   : () => handleSelectedCategory(selectedCategory, false)
               }
             >
@@ -282,7 +283,7 @@ export default function Game({ data }: GameProps) {
 
                 handleSelectedCategory(
                   category,
-                  isStreak === null ? false : true
+                  isStreak === null || livesCount === 0 ? false : true
                 )
               }
             >

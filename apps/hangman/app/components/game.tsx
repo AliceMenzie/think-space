@@ -190,10 +190,8 @@ export default function Game({ data }: GameProps) {
 
   const handleKeyDown = (event: any) => {
     if (event.key.match(/^[a-z]$/)) {
-      console.log(' key', event.key.toUpperCase());
       return handleGuess(event.key.toUpperCase());
     } else {
-      console.log('ignoring key', event.key.toUpperCase());
       return;
     }
   };
@@ -201,7 +199,6 @@ export default function Game({ data }: GameProps) {
   const handleGuess = (
     letter: any // => ()
   ) => {
-    console.log('handleGuessTriggered');
     if (!guessedLetters.includes(letter)) {
       setGuessedLetters([...guessedLetters, letter]);
     }
@@ -216,11 +213,6 @@ export default function Game({ data }: GameProps) {
     }
     return guessedLetters.includes(letter.toUpperCase());
   };
-
-  useEffect(() => {
-    console.log('render');
-    console.log('render', hiddenWord);
-  });
 
   return (
     <div

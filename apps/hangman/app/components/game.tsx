@@ -330,7 +330,7 @@ export default function Game({ data }: GameProps) {
                 .join('')
                 .split(' ')
                 .map((word) => (
-                  <div key={word} className="flex gap-3 gap-x-5 px-4">
+                  <div key={word} className="border md:border-none flex flex-wrap md:flex-no-wrap gap-1 sm:gap-3 sm:gap-x-5 px-4">
                     {word.split('').map((letter, index) => (
                       <React.Fragment key={index}>
                         <LetterBadge

@@ -4,10 +4,6 @@
 // bug - lord of ring, on streak new  game not clearing 100%
 // bug - rerenders
 // fix - inline arrow functions
-// fix - category switching
-// fix - can select letters when game not started
-// add warning on ui when resetting
-// change new game button position and conditionally render
 // refactor to cleaner composition context
 // --- make custom components in ui lib
 // add - keyboard, key events
@@ -21,7 +17,16 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-  // LetterBadge
+  // LetterBadge,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from '@nx-next-shadcn-ui-starter/ui-kit/ui';
 import React from 'react';
 import LetterBadge from '@nx-next-shadcn-ui-starter/ui-kit/ui/lib/ui/letterBadge';
@@ -58,42 +63,120 @@ export default function Game({ data }: GameProps) {
   const ALPHABET = useMemo(() => {
     return Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
   }, []);
+  const [triggerAlert, setTriggerAlert] = useState({
+    state: false,
+    selection: '',
+  });
   const [isStreak, setIsStreak] = useState<null | number>(null);
   const [isGuessed, setIsGuessed] = useState(false);
   const [hiddenWord, setHiddenWord] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState('Animals');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [guessedLetters, setGuessedLetters] = useState<string[]>([' ']);
   const [livesCount, setLivesCount] = useState(5);
   const lives = Array.from({ length: livesCount }, (_, index) => index + 1);
 
   const handleSelectedCategory = (category: any, keepStreak = false) => {
+    if (category === null) {
+      setIsGuessed(false);
+      setGuessedLetters([' ']);
+      setHiddenWord([]);
+      setSelectedCategory(null);
+      setLivesCount(5);
+
+      return;
+    }
+
     if (!keepStreak) {
       setIsStreak(null);
+      setSelectedCategory(null);
     }
-    setIsGuessed(false);
-    setGuessedLetters([' ']);
-    setHiddenWord([]);
-    setSelectedCategory(category);
-    setLivesCount(5);
 
-    const currentCategory = category.toLowerCase();
+    if (!isGuessed) {
+      if (keepStreak && hiddenWord.length >= 1) {
+        setTriggerAlert({ state: true, selection: category });
 
-    const currentSelection = data[currentCategory];
+        return;
+      }
+      setIsGuessed(false);
+      setGuessedLetters([' ']);
+      setHiddenWord([]);
+      setSelectedCategory(category);
+      setLivesCount(5);
 
-    const randomIndex = Math.floor(
-      Math.random() * data[currentCategory].length
+      const currentCategory = category.toLowerCase();
+
+      const currentSelection = data[currentCategory];
+
+      const randomIndex = Math.floor(
+        Math.random() * data[currentCategory].length
+      );
+
+      const newWord: string[] = currentSelection[randomIndex]
+        .toUpperCase()
+        .split('');
+
+      setHiddenWord(newWord);
+    }
+
+    if (isGuessed) {
+      setIsGuessed(false);
+      setGuessedLetters([' ']);
+      setHiddenWord([]);
+      setSelectedCategory(category);
+      setLivesCount(5);
+
+      const currentCategory = category.toLowerCase();
+
+      const currentSelection = data[currentCategory];
+
+      const randomIndex = Math.floor(
+        Math.random() * data[currentCategory].length
+      );
+
+      const newWord: string[] = currentSelection[randomIndex]
+        .toUpperCase()
+        .split('');
+
+      setHiddenWord(newWord);
+    }
+  };
+
+  const handleContinueAlert = () => {
+    handleSelectedCategory(triggerAlert.selection, false);
+  };
+
+  const renderLooseStreakMessage = () => {
+    return (
+      <AlertDialog
+        open={triggerAlert.state}
+        onOpenChange={() =>
+          setTriggerAlert({ state: !triggerAlert.state, selection: '' })
+        }
+      >
+        <AlertDialogTrigger></AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              🔥 Continuing will delete your streak.
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Your current streak is{' '}
+              <span className="font-bold">{isStreak} 🔥</span>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleContinueAlert}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     );
-
-    const newWord: string[] = currentSelection[randomIndex]
-      .toUpperCase()
-      .split('');
-
-    setHiddenWord(newWord);
   };
 
   useEffect(() => {
     if (hiddenWord.length > 1) {
-      console.log('inside if');
       const wordIsGuessed = hiddenWord
         .filter((letter) => /[a-zA-Z]/.test(letter))
         .every((letter) => guessedLetters.includes(letter) || letter === ' ');
@@ -101,18 +184,12 @@ export default function Game({ data }: GameProps) {
       setIsGuessed(wordIsGuessed);
       if (wordIsGuessed) {
         setIsStreak((prevNumber) => (prevNumber != null ? prevNumber + 1 : 1));
+        // setSelectedCategory(null);
       }
     } else {
       setIsGuessed(false);
     }
   }, [guessedLetters, hiddenWord]);
-
-  useEffect(() => {
-    console.log('component rerendered');
-    console.log('hiddenWord ', hiddenWord);
-    console.log('guessedLetters ', guessedLetters);
-    console.log('isGuessed ', isGuessed);
-  });
 
   const handleGuess = (letter: any) => () => {
     if (!guessedLetters.includes(letter)) {
@@ -134,6 +211,7 @@ export default function Game({ data }: GameProps) {
     <div className="h-full flex-1 flex-col space-y-8 p-8 flex">
       <div className="flex justify-between">
         <div className="flex flex-col gap-3 md:justify-between md:flex-row flex-1 md:place-items-center">
+          {renderLooseStreakMessage()}
           <h1 className="text-2xl font-bold tracking-tight">Hangman</h1>
 
           {isStreak && <p className="font-bold text-xl">{isStreak} 🔥</p>}
@@ -161,28 +239,47 @@ export default function Game({ data }: GameProps) {
           </ul>
         </div>
         <div className="flex flex-col flex-1 gap-3 place-items-end">
-          <Button onClick={() => handleSelectedCategory(selectedCategory)}>
-            Reset
-          </Button>
-          <Button
-            variant={'outline'}
-            disabled={!isGuessed}
-            onClick={() => handleSelectedCategory(selectedCategory, true)}
-          >
-            New Game
-          </Button>
+          {!isGuessed && selectedCategory && (
+            <Button
+              onClick={
+                isStreak
+                  ? () =>
+                      setTriggerAlert({
+                        state: true,
+                        selection: selectedCategory,
+                      })
+                  : () => handleSelectedCategory(selectedCategory, false)
+              }
+            >
+              Restart
+            </Button>
+          )}
+          {isGuessed && (
+            <Button
+              variant={'outline'}
+              disabled={!isGuessed}
+              onClick={() => handleSelectedCategory(null, true)}
+            >
+              New Game
+            </Button>
+          )}
         </div>
       </div>
-      <Tabs>
+      <Tabs
+        // @ts-ignore
+        value={selectedCategory}
+      >
         <TabsList>
           {CATEGORIES.map((category) => (
             <TabsTrigger
               key={category}
               value={category}
               onClick={() =>
-                // TODO change this to either trigger reset or new game depending on conditions
-                // only switch category once before triggers reset
-                // condition - add warnning on trigger reset
+                // if isStreak & isGuessed
+                // if isStreak & !isGuessed
+                // if !isStreak & isGuessed
+                // if !isStreak & !isGuessed
+
                 handleSelectedCategory(
                   category,
                   isStreak === null ? false : true
@@ -250,7 +347,7 @@ export default function Game({ data }: GameProps) {
         {ALPHABET.map((letter) => (
           <li key={letter}>
             <Button
-              disabled={handleIsGuessed(letter)}
+              disabled={!selectedCategory || handleIsGuessed(letter)}
               onClick={handleGuess(letter)}
             >
               {letter}

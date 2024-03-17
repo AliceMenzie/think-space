@@ -5,3 +5,4 @@ export * from './lib/ui/tabs';
 export * from './lib/ui/switch';
 export * from './lib/ui/accordion';
 export * from './lib/ui/letterBadge';
+export * from './lib/ui/alert-dialog';

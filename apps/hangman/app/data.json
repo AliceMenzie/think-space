@@ -1,134 +1,135 @@
 {
-    "animals": [
-        "Dog",
-        "Cat",
-        "Lion",
-        "Tiger",
-        "Elephant",
-        "Giraffe",
-        "Zebra",
-        "Hippopotamus",
-        "Rhinoceros",
-        "Bear",
-        "Wolf",
-        "Fox",
-        "Rabbit",
-        "Deer",
-        "Kangaroo",
-        "Koala",
-        "Panda",
-        "Gorilla",
-        "Chimpanzee",
-        "Orangutan",
-        "Monkey",
-        "Dolphin",
-        "Whale",
-        "Shark",
-        "Octopus",
-        "Squid",
-        "Jellyfish",
-        "Penguin",
-        "Seal",
-        "Walrus"
-      ],
-    "movies": [
-          "The Godfather",
-          "The Shawshank Redemption",
-          "Pulp Fiction",
-          "The Dark Knight",
-          "Schindler's List",
-          "The Lord of the Rings: The Return of the King",
-          "Forrest Gump",
-          "Inception",
-          "Star Wars: Episode IV - A New Hope",
-          "The Matrix",
-          "Fight Club",
-          "The Silence of the Lambs",
-          "The Avengers",
-          "Avatar",
-          "Gladiator",
-          "Jurassic Park",
-          "Titanic",
-          "Back to the Future",
-          "Toy Story",
-          "The Lion King",
-          "The Godfather: Part II",
-          "The Lord of the Rings: The Fellowship of the Ring",
-          "The Shawshank Redemption",
-          "The Dark Knight Rises",
-          "The Departed",
-          "The Prestige",
-          "Goodfellas",
-          "Saving Private Ryan",
-          "Inglourious Basterds",
-          "The Green Mile",
-          "The Usual Suspects",
-          "Schindler's List",
-          "Se7en",
-          "The Silence of the Lambs",
-          "The Sixth Sense",
-          "The Truman Show",
-          "Braveheart",
-          "Gladiator",
-          "Django Unchained",
-          "The Wolf of Wall Street",
-          "Interstellar",
-          "The Revenant",
-          "The Matrix Reloaded",
-          "The Matrix Revolutions",
-          "Shutter Island",
-          "Inception",
-          "Eternal Sunshine of the Spotless Mind",
-          "The Grand Budapest Hotel",
-          "Forrest Gump",
-          "Catch Me If You Can",
-          "Forrest Gump",
-          "The Lion King",
-          "Toy Story 3",
-          "Finding Nemo",
-          "Up",
-          "WALL-E",
-          "Ratatouille",
-          "Toy Story 2",
-          "Monsters, Inc.",
-          "Inside Out",
-          "Finding Dory",
-          "The Incredibles",
-          "Cars",
-          "Toy Story 4",
-          "The Godfather: Part III",
-          "Scarface",
-          "Casino",
-          "Heat",
-          "A Clockwork Orange",
-          "American History X",
-          "The Departed",
-          "No Country for Old Men",
-          "Memento",
-          "Fight Club",
-          "American Beauty",
-          "The Social Network",
-          "Inglourious Basterds",
-          "Django Unchained",
-          "Reservoir Dogs",
-          "Kill Bill: Volume 1",
-          "Kill Bill: Volume 2",
-          "Pulp Fiction",
-          "The Hateful Eight",
-          "Once Upon a Time in Hollywood",
-          "Titanic",
-          "Braveheart",
-          "Gladiator",
-          "300",
-          "Troy",
-          "Kingdom of Heaven",
-          "Apocalypto",
-          "Brave",
-          "Frozen",
-          "The Incredibles 2",
-          "Moana"
+    "categories": {
+        "animals": [
+            "Dog",
+            "Cat",
+            "Lion",
+            "Tiger",
+            "Elephant",
+            "Giraffe",
+            "Zebra",
+            "Hippopotamus",
+            "Rhinoceros",
+            "Bear",
+            "Wolf",
+            "Fox",
+            "Rabbit",
+            "Deer",
+            "Kangaroo",
+            "Koala",
+            "Panda",
+            "Gorilla",
+            "Chimpanzee",
+            "Orangutan",
+            "Monkey",
+            "Dolphin",
+            "Whale",
+            "Shark",
+            "Octopus",
+            "Squid",
+            "Jellyfish",
+            "Penguin",
+            "Seal",
+            "Walrus"
         ],
-    "foods": [
+        "movies": [
+            "The Godfather",
+            "The Shawshank Redemption",
+            "Pulp Fiction",
+            "The Dark Knight",
+            "Schindler's List",
+            "The Lord of the Rings: The Return of the King",
+            "Forrest Gump",
+            "Inception",
+            "Star Wars: Episode IV - A New Hope",
+            "The Matrix",
+            "Fight Club",
+            "The Silence of the Lambs",
+            "The Avengers",
+            "Avatar",
+            "Gladiator",
+            "Jurassic Park",
+            "Titanic",
+            "Back to the Future",
+            "Toy Story",
+            "The Lion King",
+            "The Godfather: Part II",
+            "The Lord of the Rings: The Fellowship of the Ring",
+            "The Shawshank Redemption",
+            "The Dark Knight Rises",
+            "The Departed",
+            "The Prestige",
+            "Goodfellas",
+            "Saving Private Ryan",
+            "Inglourious Basterds",
+            "The Green Mile",
+            "The Usual Suspects",
+            "Schindler's List",
+            "Se7en",
+            "The Silence of the Lambs",
+            "The Sixth Sense",
+            "The Truman Show",
+            "Braveheart",
+            "Gladiator",
+            "Django Unchained",
+            "The Wolf of Wall Street",
+            "Interstellar",
+            "The Revenant",
+            "The Matrix Reloaded",
+            "The Matrix Revolutions",
+            "Shutter Island",
+            "Inception",
+            "Eternal Sunshine of the Spotless Mind",
+            "The Grand Budapest Hotel",
+            "Forrest Gump",
+            "Catch Me If You Can",
+            "Forrest Gump",
+            "The Lion King",
+            "Toy Story 3",
+            "Finding Nemo",
+            "Up",
+            "WALL-E",
+            "Ratatouille",
+            "Toy Story 2",
+            "Monsters, Inc.",
+            "Inside Out",
+            "Finding Dory",
+            "The Incredibles",
+            "Cars",
+            "Toy Story 4",
+            "The Godfather: Part III",
+            "Scarface",
+            "Casino",
+            "Heat",
+            "A Clockwork Orange",
+            "American History X",
+            "The Departed",
+            "No Country for Old Men",
+            "Memento",
+            "Fight Club",
+            "American Beauty",
+            "The Social Network",
+            "Inglourious Basterds",
+            "Django Unchained",
+            "Reservoir Dogs",
+            "Kill Bill: Volume 1",
+            "Kill Bill: Volume 2",
+            "Pulp Fiction",
+            "The Hateful Eight",
+            "Once Upon a Time in Hollywood",
+            "Titanic",
+            "Braveheart",
+            "Gladiator",
+            "300",
+            "Troy",
+            "Kingdom of Heaven",
+            "Apocalypto",
+            "Brave",
+            "Frozen",
+            "The Incredibles 2",
+            "Moana"
+        ],
+        "foods": [
             "Pizza",
             "Burger",
             "Spaghetti",
@@ -227,7 +228,7 @@
             "Lentil Soup",
             "Chicken Noodle Soup"
         ],
-    "countries": [
+        "countries": [
             "Afghanistan",
             "Albania",
             "Algeria",
@@ -424,7 +425,7 @@
             "Zambia",
             "Zimbabwe"
         ],
-    "sports": [
+        "sports": [
             "Football",
             "Basketball",
             "Baseball",
@@ -518,7 +519,7 @@
             "Wing Chun",
             "Jeet Kune Do"
         ],
-    "music": [
+        "music": [
             "Bohemian Rhapsody - Queen",
             "Imagine - John Lennon",
             "Hotel California - Eagles",
@@ -610,7 +611,7 @@
             "All Along the Watchtower - Jimi Hendrix",
             "Gimme Shelter - The Rolling Stones"
         ],
-    "literature": [
+        "literature": [
             "To Kill a Mockingbird - Harper Lee",
             "1984 - George Orwell",
             "The Great Gatsby - F. Scott Fitzgerald",
@@ -705,7 +706,7 @@
             "Emma - Jane Austen",
             "Sense and Sensibility - Jane Austen"
         ],
-    "science": [
+        "science": [
             "Hypothesis",
             "Experiment",
             "Theory",
@@ -816,7 +817,7 @@
             "Mitosis",
             "Meiosis"
         ],
-    "pokemon": [
+        "pokemon": [
             "Bulbasaur",
             "Ivysaur",
             "Venusaur",
@@ -968,8 +969,130 @@
             "Dragonite",
             "Mewtwo",
             "Mew"
-          ]
-          
-
-      
+        ]
+    },
+    "keyboard": {
+        "keyboard_layout": "QWERTY",
+        "keys": [
+            {
+                "row": 2,
+                "key": [
+                    {
+                        "label": "q",
+                        "code": "KeyQ"
+                    },
+                    {
+                        "label": "w",
+                        "code": "KeyW"
+                    },
+                    {
+                        "label": "e",
+                        "code": "KeyE"
+                    },
+                    {
+                        "label": "r",
+                        "code": "KeyR"
+                    },
+                    {
+                        "label": "t",
+                        "code": "KeyT"
+                    },
+                    {
+                        "label": "y",
+                        "code": "KeyY"
+                    },
+                    {
+                        "label": "u",
+                        "code": "KeyU"
+                    },
+                    {
+                        "label": "i",
+                        "code": "KeyI"
+                    },
+                    {
+                        "label": "o",
+                        "code": "KeyO"
+                    },
+                    {
+                        "label": "p",
+                        "code": "KeyP"
+                    }
+                ]
+            },
+            {
+                "row": 3,
+                "key": [
+                    {
+                        "label": "a",
+                        "code": "KeyA"
+                    },
+                    {
+                        "label": "s",
+                        "code": "KeyS"
+                    },
+                    {
+                        "label": "d",
+                        "code": "KeyD"
+                    },
+                    {
+                        "label": "f",
+                        "code": "KeyF"
+                    },
+                    {
+                        "label": "g",
+                        "code": "KeyG"
+                    },
+                    {
+                        "label": "h",
+                        "code": "KeyH"
+                    },
+                    {
+                        "label": "j",
+                        "code": "KeyJ"
+                    },
+                    {
+                        "label": "k",
+                        "code": "KeyK"
+                    },
+                    {
+                        "label": "l",
+                        "code": "KeyL"
+                    }
+                ]
+            },
+            {
+                "row": 4,
+                "key": [
+                    {
+                        "label": "z",
+                        "code": "KeyZ"
+                    },
+                    {
+                        "label": "x",
+                        "code": "KeyX"
+                    },
+                    {
+                        "label": "c",
+                        "code": "KeyC"
+                    },
+                    {
+                        "label": "v",
+                        "code": "KeyV"
+                    },
+                    {
+                        "label": "b",
+                        "code": "KeyB"
+                    },
+                    {
+                        "label": "n",
+                        "code": "KeyN"
+                    },
+                    {
+                        "label": "m",
+                        "code": "KeyM"
+                    }
+                ]
+            }
+        ]
+    }
 }

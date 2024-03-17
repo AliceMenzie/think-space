@@ -7,7 +7,7 @@ interface letterBadgeProps {
   className?: string;
 }
 
-const LetterBadge = ({ letter, className }: letterBadgeProps) => {
+export function LetterBadge({ letter, className }: letterBadgeProps) {
   return (
     <p
       className={cn(
@@ -18,5 +18,4 @@ const LetterBadge = ({ letter, className }: letterBadgeProps) => {
       {letter}
     </p>
   );
-};
-export default LetterBadge;
+}

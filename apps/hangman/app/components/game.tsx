@@ -1,23 +1,24 @@
 'use client';
 
 // TODOS
+// FIX TYPES :(
 // bug - lord of ring, on streak new  game not clearing 100%
 // bug - rerenders
 // fix - inline arrow functions
+// fix? - focus on tab when guessing letter keyboard
 // refactor to cleaner composition context
 // --- make custom components in ui lib
-// add - keyboard, key events
 // two player? timer ? more categories
-//  add kids - hints and version where you see image practice spelling ?
+// add a casual and daily mode
+//  add levels (kids - hints and version where you see image practice spelling ?)
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-  // LetterBadge,
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -27,9 +28,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
+  LetterBadge,
 } from '@nx-next-shadcn-ui-starter/ui-kit/ui';
 import React from 'react';
-import LetterBadge from '@nx-next-shadcn-ui-starter/ui-kit/ui/lib/ui/letterBadge';
 
 interface GameProps {
   data: any;
@@ -60,9 +61,6 @@ const CATEGORIES = [
 ];
 
 export default function Game({ data }: GameProps) {
-  const ALPHABET = useMemo(() => {
-    return Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
-  }, []);
   const [triggerAlert, setTriggerAlert] = useState({
     state: false,
     selection: '',
@@ -104,10 +102,10 @@ export default function Game({ data }: GameProps) {
 
       const currentCategory = category.toLowerCase();
 
-      const currentSelection = data[currentCategory];
+      const currentSelection = data.categories[currentCategory];
 
       const randomIndex = Math.floor(
-        Math.random() * data[currentCategory].length
+        Math.random() * data.categories[currentCategory].length
       );
 
       const newWord: string[] = currentSelection[randomIndex]
@@ -126,10 +124,10 @@ export default function Game({ data }: GameProps) {
 
       const currentCategory = category.toLowerCase();
 
-      const currentSelection = data[currentCategory];
+      const currentSelection = data.categories[currentCategory];
 
       const randomIndex = Math.floor(
-        Math.random() * data[currentCategory].length
+        Math.random() * data.categories[currentCategory].length
       );
 
       const newWord: string[] = currentSelection[randomIndex]
@@ -190,7 +188,20 @@ export default function Game({ data }: GameProps) {
     }
   }, [guessedLetters, hiddenWord]);
 
-  const handleGuess = (letter: any) => () => {
+  const handleKeyDown = (event: any) => {
+    if (event.key.match(/^[a-z]$/)) {
+      console.log(' key', event.key.toUpperCase());
+      return handleGuess(event.key.toUpperCase());
+    } else {
+      console.log('ignoring key', event.key.toUpperCase());
+      return;
+    }
+  };
+
+  const handleGuess = (
+    letter: any // => ()
+  ) => {
+    console.log('handleGuessTriggered');
     if (!guessedLetters.includes(letter)) {
       setGuessedLetters([...guessedLetters, letter]);
     }
@@ -203,11 +214,20 @@ export default function Game({ data }: GameProps) {
     if (livesCount === 0) {
       return true;
     }
-    return guessedLetters.includes(letter);
+    return guessedLetters.includes(letter.toUpperCase());
   };
 
+  useEffect(() => {
+    console.log('render');
+    console.log('render', hiddenWord);
+  });
+
   return (
-    <div className="h-full flex-1 flex-col space-y-8 p-8 flex">
+    <div
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      className="h-full flex-1 flex-col space-y-8 p-8 flex"
+    >
       <div className="flex justify-between">
         <div className="flex flex-col gap-3 md:justify-between md:flex-row flex-1 md:place-items-center">
           {renderLooseStreakMessage()}
@@ -269,6 +289,7 @@ export default function Game({ data }: GameProps) {
       <Tabs
         // @ts-ignore
         value={selectedCategory}
+        activationMode="manual"
       >
         <TabsList>
           {CATEGORIES.map((category) => (
@@ -276,11 +297,6 @@ export default function Game({ data }: GameProps) {
               key={category}
               value={category}
               onClick={() =>
-                // if isStreak & isGuessed
-                // if isStreak & !isGuessed
-                // if !isStreak & isGuessed
-                // if !isStreak & !isGuessed
-
                 handleSelectedCategory(
                   category,
                   isStreak === null || livesCount === 0 ? false : true
@@ -344,16 +360,26 @@ export default function Game({ data }: GameProps) {
           </h3>
         )}
       </div>
-      <ul className="flex flex-row gap-5 place-content-evenly flex-wrap max-w-[800px] self-center">
-        {ALPHABET.map((letter) => (
-          <li key={letter}>
-            <Button
-              disabled={!selectedCategory || handleIsGuessed(letter)}
-              onClick={handleGuess(letter)}
-            >
-              {letter}
-            </Button>
-          </li>
+      <ul className="flex flex-col gap-5 place-content-center max-w-[800px] self-center">
+        {data.keyboard.keys.map((row: any) => (
+          <div
+            className="flex flex-row flex-wrap gap-3 self-center min-w-[300px]"
+            key={row.row}
+          >
+            {' '}
+            {row.key.map((key: any) => (
+              <li key={key.label}>
+                <Button
+                  disabled={
+                    !selectedCategory || handleIsGuessed(key.label) || isGuessed
+                  }
+                  onClick={() => handleGuess(key.label.toUpperCase())}
+                >
+                  {key.label}
+                </Button>
+              </li>
+            ))}
+          </div>
         ))}
       </ul>
     </div>

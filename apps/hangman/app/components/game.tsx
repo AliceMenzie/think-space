@@ -218,14 +218,12 @@ export default function Game({ data }: GameProps) {
     <div
       onKeyDown={handleKeyDown}
       tabIndex={0}
-      className="h-full flex-1 flex-col space-y-8 p-8 flex"
+      className="h-full flex-1 flex-col space-y-8 sm:p-8 flex"
     >
       <div className="flex justify-between">
-        <div className="flex flex-col gap-3 md:justify-between md:flex-row flex-1 md:place-items-center">
+        <div className="flex flex-col gap-3">
           {renderLooseStreakMessage()}
           <h1 className="text-2xl font-bold tracking-tight">Hangman</h1>
-
-          {isStreak && <p className="font-bold text-xl">{isStreak} 🔥</p>}
 
           <ul className="min-w-[180px] flex  gap-3">
             {!isGuessed &&
@@ -239,7 +237,7 @@ export default function Game({ data }: GameProps) {
               ))}
             {livesCount === 0 && (
               <li className="scroll-m-20 text-xl font-semibold tracking-wider flex gap-5 items-center">
-                💀 💀 💀
+                💀 💀 💀 💀 💀
               </li>
             )}
             {isGuessed && hiddenWord.length !== 0 && (
@@ -248,6 +246,7 @@ export default function Game({ data }: GameProps) {
               </li>
             )}
           </ul>
+          {isStreak && <p className="font-bold text-xl">{isStreak} 🔥</p>}
         </div>
         <div className="flex flex-col flex-1 gap-3 place-items-end">
           {!isGuessed && selectedCategory && (
@@ -308,7 +307,7 @@ export default function Game({ data }: GameProps) {
                 .map((word) => (
                   <div
                     key={word}
-                    className="border md:border-none flex flex-wrap md:flex-no-wrap gap-1 sm:gap-3 sm:gap-x-5 px-4"
+                    className="border md:border-none flex flex-wrap md:flex-no-wrap gap-1 sm:gap-3 sm:gap-x-5 sm:px-4"
                   >
                     {word.split('').map((letter, index) => (
                       <React.Fragment key={index}>
@@ -330,7 +329,10 @@ export default function Game({ data }: GameProps) {
                 .join('')
                 .split(' ')
                 .map((word) => (
-                  <div key={word} className="border md:border-none flex flex-wrap md:flex-no-wrap gap-1 sm:gap-3 sm:gap-x-5 px-4">
+                  <div
+                    key={word}
+                    className="border md:border-none flex flex-wrap md:flex-no-wrap gap-1 sm:gap-3 sm:gap-x-5 sm:px-4"
+                  >
                     {word.split('').map((letter, index) => (
                       <React.Fragment key={index}>
                         <LetterBadge
@@ -355,13 +357,14 @@ export default function Game({ data }: GameProps) {
       <ul className="flex flex-col gap-5 place-content-center max-w-[800px] self-center">
         {data.keyboard.keys.map((row: any) => (
           <div
-            className="flex flex-row flex-wrap gap-3 self-center min-w-[300px]"
+            className="flex flex-row gap-1  sm:gap-3 self-center px-12 mx-8"
             key={row.row}
           >
             {' '}
             {row.key.map((key: any) => (
               <li key={key.label}>
                 <Button
+                  size={'responsive'}
                   disabled={
                     !selectedCategory || handleIsGuessed(key.label) || isGuessed
                   }

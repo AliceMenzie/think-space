@@ -6,3 +6,5 @@ export * from './lib/ui/switch';
 export * from './lib/ui/accordion';
 export * from './lib/ui/letterBadge';
 export * from './lib/ui/alert-dialog';
+export * from './lib/ui/typography';
+export * from './lib/ui/keyboard';

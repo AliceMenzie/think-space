@@ -56,12 +56,12 @@ const GameBoard = () => {
           <TabsTrigger
             key={category}
             value={category}
-            onClick={() =>
+            onClick={() => {
               handleSelectedCategory(
                 category,
                 isStreak === null || livesCount === 0 ? false : true
-              )
-            }
+              );
+            }}
           >
             {category}
           </TabsTrigger>

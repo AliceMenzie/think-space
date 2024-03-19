@@ -1,17 +1,6 @@
 'use client';
 
 import { createContext, useEffect, useState } from 'react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@nx-next-shadcn-ui-starter/ui-kit/ui';
 
 interface HangmanContextProviderProps {
   data: any;
@@ -21,16 +10,19 @@ interface HangmanContextProviderProps {
 interface IHangmanContext {
   handleSelectedCategory: (category: any, keepStreak?: boolean) => void;
   handleGuess: (letter: any) => void;
-  handleKeyDown: (event: any) => void;
   handleIsGuessed: (letter: any) => boolean | undefined;
-  RenderLooseStreakMessage: () => JSX.Element;
   handleTriggerAlert: () => void;
+  handleContinueAlert: () => void;
   isGuessed: boolean;
   hiddenWord: string[];
   livesCount: number;
   isStreak: number | null;
   selectedCategory: string | null;
   guessedLetters: string[];
+  triggerAlert: {
+    state: boolean;
+    selection: string | null;
+  };
 }
 
 export const HangmanContext = createContext<IHangmanContext | null>(null);
@@ -53,14 +45,32 @@ export default function HangmanContextProvider({
     selection: null,
   });
 
+  const resetState = () => {
+    setIsGuessed(false);
+    setGuessedLetters([' ']);
+    setHiddenWord([]);
+    setLivesCount(5);
+  };
+
+  const selectConvertWord = (category: string) => {
+    const currentCategory = category.toLowerCase();
+
+    const currentSelection = data.categories[currentCategory];
+
+    const randomIndex = Math.floor(
+      Math.random() * data.categories[currentCategory].length
+    );
+
+    const newWord: string[] = currentSelection[randomIndex]
+      .toUpperCase()
+      .split('');
+
+    setHiddenWord(newWord);
+  };
+
   const handleSelectedCategory = (category: any, keepStreak = false) => {
     if (category === null) {
-      setIsGuessed(false);
-      setGuessedLetters([' ']);
-      setHiddenWord([]);
-      setSelectedCategory(null);
-      setLivesCount(5);
-
+      resetState();
       return;
     }
 
@@ -69,65 +79,23 @@ export default function HangmanContextProvider({
       setSelectedCategory(null);
     }
 
-    if (!isGuessed) {
-      if (keepStreak && hiddenWord.length >= 1 && livesCount !== 0) {
-        setTriggerAlert({ state: true, selection: category });
-        return;
-      }
-      setIsGuessed(false);
-      setGuessedLetters([' ']);
-      setHiddenWord([]);
-      setSelectedCategory(category);
-      setLivesCount(5);
-
-      const currentCategory = category.toLowerCase();
-
-      const currentSelection = data.categories[currentCategory];
-
-      const randomIndex = Math.floor(
-        Math.random() * data.categories[currentCategory].length
-      );
-
-      const newWord: string[] = currentSelection[randomIndex]
-        .toUpperCase()
-        .split('');
-
-      setHiddenWord(newWord);
-    }
-
-    if (isGuessed) {
-      setIsGuessed(false);
-      setGuessedLetters([' ']);
-      setHiddenWord([]);
-      setSelectedCategory(category);
-      setLivesCount(5);
-
-      const currentCategory = category.toLowerCase();
-
-      const currentSelection = data.categories[currentCategory];
-
-      const randomIndex = Math.floor(
-        Math.random() * data.categories[currentCategory].length
-      );
-
-      const newWord: string[] = currentSelection[randomIndex]
-        .toUpperCase()
-        .split('');
-
-      setHiddenWord(newWord);
-    }
-  };
-
-  const handleKeyDown = (event: any) => {
-    if (event.key.match(/^[a-z]$/)) {
-      return handleGuess(event.key.toUpperCase());
-    } else {
+    if (
+      !isGuessed &&
+      keepStreak &&
+      hiddenWord.length >= 1 &&
+      livesCount !== 0
+    ) {
+      setTriggerAlert({ state: true, selection: category });
       return;
     }
+
+    resetState();
+    setSelectedCategory(category);
+    selectConvertWord(category);
   };
 
   const handleGuess = (
-    letter: any // => ()
+    letter: any
   ) => {
     if (!guessedLetters.includes(letter)) {
       setGuessedLetters([...guessedLetters, letter]);
@@ -153,52 +121,21 @@ export default function HangmanContextProvider({
       setIsGuessed(wordIsGuessed);
       if (wordIsGuessed) {
         setIsStreak((prevNumber) => (prevNumber != null ? prevNumber + 1 : 1));
-        // setSelectedCategory(null);
       }
     } else {
       setIsGuessed(false);
     }
   }, [guessedLetters, hiddenWord]);
 
-  const handleContinueAlert = () => {
-    handleSelectedCategory(triggerAlert.selection, false);
-  };
-
-  const RenderLooseStreakMessage = () => {
-    return (
-      <AlertDialog
-        open={triggerAlert.state}
-        onOpenChange={() =>
-          setTriggerAlert({ state: !triggerAlert.state, selection: '' })
-        }
-      >
-        <AlertDialogTrigger></AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              🔥 Continuing will delete your streak.
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              Your current streak is{' '}
-              <span className="font-bold">{isStreak} 🔥</span>
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleContinueAlert}>
-              Continue
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    );
-  };
-
   const handleTriggerAlert = () => {
     setTriggerAlert({
-      state: true,
+      state: !triggerAlert.state,
       selection: selectedCategory,
     });
+  };
+
+  const handleContinueAlert = () => {
+    handleSelectedCategory(triggerAlert.selection, false);
   };
 
   return (
@@ -207,15 +144,15 @@ export default function HangmanContextProvider({
         handleSelectedCategory,
         handleGuess,
         handleIsGuessed,
-        handleKeyDown,
-        RenderLooseStreakMessage,
         handleTriggerAlert,
+        handleContinueAlert,
         isGuessed,
         hiddenWord,
         livesCount,
         isStreak,
         selectedCategory,
         guessedLetters,
+        triggerAlert,
       }}
     >
       {children}

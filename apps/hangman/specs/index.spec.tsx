@@ -42,14 +42,6 @@ describe('Game', () => {
     expect(baseElement).toBeTruthy();
   });
 
-  it('should render successfully', async () => {
-    const { baseElement } = customRender(<Game data={testData} />);
-    expect(baseElement).toBeTruthy();
-  });
-  it('should render successfully', async () => {
-    const { baseElement } = customRender(<Game data={testData} />);
-    expect(baseElement).toBeTruthy();
-  });
 
   it('Keyboard: key should be disabled when clicked )', async () => {
     customRender(<Game data={testData} />);

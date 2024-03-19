@@ -33,6 +33,10 @@ const TabsTrigger = React.forwardRef<
       className
     )}
     {...props}
+    onBlur={(event) => event.currentTarget.blur()}
+    // onFocus={(event) => event.currentTarget.blur()}
+    onFocusCapture={(event) => event.currentTarget.blur()}
+    // onFocusCapture={}
   />
 ));
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;

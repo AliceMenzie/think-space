@@ -24,21 +24,28 @@ interface GameProps {
 }
 
 export default function Game({ data }: GameProps) {
-  const { handleGuess, hiddenWord } = useHangmanContext();
+  const { handleGuess, hiddenWord, guessedLetters } = useHangmanContext();
 
-  const handleKeyDown = (event: any) => {
-    if (event.key.match(/^[a-z]$/)) {
-      return handleGuess(event.key.toUpperCase());
-    } else {
-      return;
-    }
-  };
+  useEffect(() => {
+    const handleKeyDown = (event: any) => {
+      if (event.key.match(/^[a-z]$/)) {
+        return handleGuess(event.key.toUpperCase());
+      } else {
+        return;
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [guessedLetters]);
 
   return (
     <div
       data-testid="game-wrapper"
-      onKeyDown={handleKeyDown}
-      tabIndex={0}
+      // onKeyDown={handleKeyDown}
+      // tabIndex={0}
       className="h-full flex-1 flex-col space-y-8 sm:p-8 flex"
     >
       <StreakAlert />

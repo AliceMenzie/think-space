@@ -1,16 +1,20 @@
 'use client';
 
 import { createContext, useEffect, useState } from 'react';
+import { Data, Categories } from '../types';
 
 interface HangmanContextProviderProps {
-  data: any;
+  data: Data;
   children: React.ReactNode;
 }
 
 interface IHangmanContext {
-  handleSelectedCategory: (category: any, keepStreak?: boolean) => void;
-  handleGuess: (letter: any) => void;
-  handleIsGuessed: (letter: any) => boolean | undefined;
+  handleSelectedCategory: (
+    category: keyof Categories | null,
+    keepStreak?: boolean
+  ) => void;
+  handleGuess: (letter: string) => void;
+  handleIsGuessed: (letter: string) => boolean | undefined;
   handleTriggerAlert: () => void;
   handleContinueAlert: () => void;
   isGuessed: boolean;
@@ -34,12 +38,14 @@ export default function HangmanContextProvider({
   const [isStreak, setIsStreak] = useState<null | number>(null);
   const [isGuessed, setIsGuessed] = useState(false);
   const [hiddenWord, setHiddenWord] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<
+    keyof Categories | null
+  >(null);
   const [guessedLetters, setGuessedLetters] = useState<string[]>([' ']);
   const [livesCount, setLivesCount] = useState(5);
   const [triggerAlert, setTriggerAlert] = useState<{
     state: boolean;
-    selection: string | null;
+    selection: keyof Categories | null;
   }>({
     state: false,
     selection: null,
@@ -52,8 +58,8 @@ export default function HangmanContextProvider({
     setLivesCount(5);
   };
 
-  const selectConvertWord = (category: string) => {
-    const currentCategory = category.toLowerCase();
+  const selectConvertWord = (category: keyof Categories) => {
+    const currentCategory = category.toLowerCase() as keyof Categories;
 
     const currentSelection = data.categories[currentCategory];
 
@@ -68,9 +74,13 @@ export default function HangmanContextProvider({
     setHiddenWord(newWord);
   };
 
-  const handleSelectedCategory = (category: any, keepStreak = false) => {
+  const handleSelectedCategory = (
+    category: keyof Categories | null,
+    keepStreak = false
+  ) => {
     if (category === null) {
       resetState();
+      setSelectedCategory(null);
       return;
     }
 
@@ -94,9 +104,7 @@ export default function HangmanContextProvider({
     selectConvertWord(category);
   };
 
-  const handleGuess = (
-    letter: any
-  ) => {
+  const handleGuess = (letter: string) => {
     if (!guessedLetters.includes(letter)) {
       setGuessedLetters([...guessedLetters, letter]);
     }
@@ -105,7 +113,7 @@ export default function HangmanContextProvider({
     }
   };
 
-  const handleIsGuessed = (letter: any): boolean | undefined => {
+  const handleIsGuessed = (letter: string): boolean | undefined => {
     if (livesCount === 0) {
       return true;
     }

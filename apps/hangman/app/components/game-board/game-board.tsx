@@ -9,30 +9,7 @@ import {
   LetterBadge,
 } from '@nx-next-shadcn-ui-starter/ui-kit/ui';
 import { useHangmanContext } from '../../hooks/useHangmanContext';
-
-const CATEGORIES = [
-  'Animals',
-  'Movies',
-  'Countries',
-  'Foods',
-  'Sports',
-  'Music',
-  'Literature',
-  'Science',
-  'Pokemon',
-  // 'Famous Landmarks',
-  // 'Historical Figures',
-  // 'Cartoons/Animations',
-  // 'Occupations',
-  // 'Holidays',
-  // 'Technology',
-  // 'Body Parts',
-  // 'Colors',
-  // 'Transportation',
-  // 'Games',
-  // 'Weather',
-  // 'Celebrities',
-];
+import { Categories, CATEGORIES } from '../../types';
 
 const GameBoard = () => {
   const {
@@ -49,7 +26,6 @@ const GameBoard = () => {
     <Tabs
       // @ts-ignore
       value={selectedCategory}
-      activationMode="manual"
     >
       <TabsList>
         {CATEGORIES.map((category) => (
@@ -58,7 +34,7 @@ const GameBoard = () => {
             value={category}
             onClick={() => {
               handleSelectedCategory(
-                category,
+                category as keyof Categories,
                 isStreak === null || livesCount === 0 ? false : true
               );
             }}
@@ -76,7 +52,7 @@ const GameBoard = () => {
               .map((word) => (
                 <div
                   key={word}
-                  className="border md:border-none flex flex-wrap md:flex-no-wrap gap-1 sm:gap-3 sm:gap-x-5 sm:px-4"
+                  className="border md:border-none flex flex-wrap md:flex-no-wrap gap-1 md:gap-3 md:gap-x-5 md:px-4 px-1"
                 >
                   {word.split('').map((letter, index) => (
                     <React.Fragment key={index}>

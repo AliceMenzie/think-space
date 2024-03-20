@@ -51,10 +51,10 @@ describe('Game', () => {
 
     const buttonQ = screen.getByRole('button', { name: 'q' });
 
-    expect(buttonQ).not.toBeDisabled;
+    expect(buttonQ).not.toBeDisabled();
     fireEvent.click(buttonQ);
 
-    expect(buttonQ).toBeDisabled;
+    expect(buttonQ).toBeDisabled();
   });
   it('Keyboard: key should be disabled when keydown option chosen )', async () => {
     customRender(<Game data={testData} />);
@@ -64,12 +64,12 @@ describe('Game', () => {
     fireEvent.click(button[0]);
 
     const buttonQ = screen.getByRole('button', { name: 'q' });
-    expect(buttonQ).not.toBeDisabled;
+    expect(buttonQ).not.toBeDisabled();
 
     fireEvent.keyDown(gameWrapper, { key: 'q', code: 'KeyQ' });
 
     fireEvent.click(buttonQ);
-    expect(buttonQ).toBeDisabled;
+    expect(buttonQ).toBeDisabled();
   });
 
   // TODO should update ui when letter guessed

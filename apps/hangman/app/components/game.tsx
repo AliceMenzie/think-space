@@ -1,12 +1,12 @@
 'use client';
 
 // TODOS
-// FIX TYPES :(
+// types
+// eslint - error in ide from os version maybe rosetta term stuffing it up
 // bug - lord of ring, on streak new  game not clearing 100%
-// bug - rerenders
-// fix - inline arrow functions
-// fix? - focus on tab when guessing letter keyboard
-// refactor context? add hooks?
+// rerenders
+// review - inline functions
+// fix? - focus on tab when guessing letter keyboard // blur key press
 // two player? timer ? more categories
 // add a casual and daily mode
 //  add levels (kids - hints and version where you see image practice spelling ?)
@@ -18,18 +18,20 @@ import Keyboard from './keyboard/keyboard';
 import StartBanner from './start-banner/start-banner';
 import GameBoard from './game-board/game-board';
 import StreakAlert from './streak-alert/streak-alert';
+import { Data } from '../types';
 
 interface GameProps {
-  data: any;
+  data: Data;
 }
 
 export default function Game({ data }: GameProps) {
-  const { handleGuess, hiddenWord, guessedLetters } = useHangmanContext();
+  const { handleGuess, guessedLetters } = useHangmanContext();
 
   useEffect(() => {
     const handleKeyDown = (event: any) => {
-      if (event.key.match(/^[a-z]$/)) {
-        return handleGuess(event.key.toUpperCase());
+      const typedEvent = event as React.KeyboardEvent<Window>;
+      if (typedEvent.key.match(/^[a-z]$/)) {
+        return handleGuess(typedEvent.key.toUpperCase());
       } else {
         return;
       }
@@ -39,14 +41,12 @@ export default function Game({ data }: GameProps) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [guessedLetters]);
+  }, [guessedLetters, handleGuess]);
 
   return (
     <div
       data-testid="game-wrapper"
-      // onKeyDown={handleKeyDown}
-      // tabIndex={0}
-      className="h-full flex-1 flex-col space-y-8 sm:p-8 flex"
+      className="h-full flex-1 flex-col space-y-8 sm:p-8 flex p-2"
     >
       <StreakAlert />
       <CurrentGameBanner />

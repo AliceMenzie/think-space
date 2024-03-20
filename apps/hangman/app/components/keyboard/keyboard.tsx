@@ -7,16 +7,21 @@ import {
   Key,
 } from '@nx-next-shadcn-ui-starter/ui-kit/ui';
 import { useHangmanContext } from '../../hooks/useHangmanContext';
+import { Data, KeyboardKey, TKeyboardRow } from '../../types';
 
-function Keyboard({ data }: any) {
+interface KeyboardProps {
+  data: Data;
+}
+
+function Keyboard({ data }: KeyboardProps) {
   const { isGuessed, selectedCategory, handleIsGuessed, handleGuess } =
     useHangmanContext();
 
   return (
     <KeyboardUI>
-      {data.keyboard.keys.map((row: any) => (
+      {data.keyboard.keys.map((row: TKeyboardRow) => (
         <KeyboardRow key={row.row}>
-          {row.key.map((key: any) => (
+          {row.key.map((key: KeyboardKey) => (
             <Key key={key.label}>
               <Button
                 size={'responsive'}

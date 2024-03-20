@@ -1,5 +1,6 @@
 import { Button, Typography } from '@nx-next-shadcn-ui-starter/ui-kit/ui';
 import { useHangmanContext } from '../../hooks/useHangmanContext';
+import { Categories } from '../../types';
 
 function CurrentGameBanner() {
   const {
@@ -50,7 +51,11 @@ function CurrentGameBanner() {
             onClick={
               isStreak && livesCount !== 0
                 ? handleTriggerAlert
-                : () => handleSelectedCategory(selectedCategory, false)
+                : () =>
+                    handleSelectedCategory(
+                      selectedCategory as keyof Categories,
+                      false
+                    )
             }
           >
             Restart

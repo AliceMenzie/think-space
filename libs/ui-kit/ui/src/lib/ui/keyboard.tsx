@@ -9,10 +9,7 @@ const Keyboard = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn(
-      'flex flex-col gap-5 place-content-center md:max-w-[800px] self-center',
-      className
-    )}
+    className=" flex justify-center self-center flex-col  min-w-full gap-3"
     {...props}
   />
 ));
@@ -24,7 +21,7 @@ const KeyboardRow = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('flex flex-row sm:gap-3 self-center gap-[2px]', className)}
+    className="flex gap-1"
     {...props}
   />
 ));

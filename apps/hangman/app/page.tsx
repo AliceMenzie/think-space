@@ -5,7 +5,7 @@ import { Data } from './types';
 
 export default async function Page() {
   const file = await fs.readFile(process.cwd() + '/app/data.json', 'utf8');
-  const data: Data  = JSON.parse(file);
+  const data: Data = JSON.parse(file);
 
   return (
     <HangmanContextProvider data={data}>

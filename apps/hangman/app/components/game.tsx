@@ -46,13 +46,15 @@ export default function Game({ data }: GameProps) {
   return (
     <div
       data-testid="game-wrapper"
-      className="h-full flex-1 flex-col space-y-8 sm:p-8 flex p-2"
+      className="h-full flex-1 flex-col space-y-8 sm:p-8 flex p-2 pb-10"
     >
       <StreakAlert />
       <CurrentGameBanner />
       <GameBoard />
       <StartBanner />
-      <Keyboard data={data} />
+      <div className="flex max-w-md self-center min-w-full sm:min-w-[600px]">
+        <Keyboard data={data} />
+      </div>
     </div>
   );
 }

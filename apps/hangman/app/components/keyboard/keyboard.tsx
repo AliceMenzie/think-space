@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import {
   Button,
   Keyboard as KeyboardUI,
@@ -22,7 +23,7 @@ function Keyboard({ data }: KeyboardProps) {
       {data.keyboard.keys.map((row: TKeyboardRow) => (
         <KeyboardRow key={row.row}>
           {row.key.map((key: KeyboardKey) => (
-            <Key key={key.label}>
+            <React.Fragment key={key.code}>
               <Button
                 size={'responsive'}
                 disabled={
@@ -32,7 +33,7 @@ function Keyboard({ data }: KeyboardProps) {
               >
                 {key.label}
               </Button>
-            </Key>
+            </React.Fragment>
           ))}
         </KeyboardRow>
       ))}

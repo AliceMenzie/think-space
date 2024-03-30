@@ -45,32 +45,6 @@ function CurrentGameBanner() {
           </Typography>
         )}
       </div>
-      <div className="flex flex-col flex-1 gap-3 place-items-end">
-        {!isGuessed && selectedCategory && (
-          <Button
-            onClick={
-              isStreak && livesCount !== 0
-                ? handleTriggerAlert
-                : () =>
-                    handleSelectedCategory(
-                      selectedCategory as keyof Categories,
-                      false
-                    )
-            }
-          >
-            Restart
-          </Button>
-        )}
-        {isGuessed && (
-          <Button
-            variant={'outline'}
-            disabled={!isGuessed}
-            onClick={() => handleSelectedCategory(null, true)}
-          >
-            New Game
-          </Button>
-        )}
-      </div>
     </div>
   );
 }

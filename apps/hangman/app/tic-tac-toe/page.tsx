@@ -1,4 +1,5 @@
 'use client';
+import { Button } from '@nx-next-shadcn-ui-starter/ui-kit/ui';
 import { cn } from '@nx-next-shadcn-ui-starter/ui-kit/util';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -125,6 +126,10 @@ const Page = () => {
   };
   return (
     <div className="flex flex-col justify-center items-center">
+      <div className="w-full flex justify-center py-4 gap-4">
+        <Button>Classic</Button>
+        <Button disabled>Endless</Button>
+      </div>
       {currWinner ? (
         <h1 className="text-2xl pt-4">
           {currWinner === 'draw'
@@ -162,7 +167,7 @@ const Page = () => {
                   key={indexCol}
                   onClick={(e) => handleTurn(e, indexRow, indexCol)}
                   className={cn(
-                    'flex flex-1 justify-center items-center text-8xl text-center ',
+                    'flex flex-1 justify-center items-center text-8xl text-center',
                     `${currWinner && 'border-zinc-300'}`
                   )}
                 >

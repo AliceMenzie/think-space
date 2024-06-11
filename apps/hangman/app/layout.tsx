@@ -15,6 +15,10 @@ const routes = [
     label: 'tic-tac-toe',
     path: '/tic-tac-toe',
   },
+  {
+    label: 'tile-builder',
+    path: '/tile-builder',
+  },
 ];
 
 export default function RootLayout({
